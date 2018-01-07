@@ -1,0 +1,33 @@
+#!/bin/sh
+
+start() {
+  [ -f /tmp/ftpd.pid ] && return 1
+  tcpsvd -vE 0.0.0.0 21 ftpd -w / &
+  echo "$!" > /tmp/ftpd.pid
+}
+
+stop() {
+  [ -f /tmp/ftpd.pid ] && kill "$(cat /tmp/ftpd.pid)"
+  rm /tmp/ftpd.pid
+}
+
+restart() {
+  stop
+  start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    ;;
+  restart|reload)
+    restart
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+
+exit $?
