@@ -4,8 +4,7 @@ all: out/ftpd-$(GIT_COMMIT).hmod
 
 out/ftpd-$(GIT_COMMIT).hmod:
 	mkdir -p out/
-	chmod +x "mod/etc/init.d/S93ftpd"
-	[ -f "out/ftpd-$(GIT_COMMIT).hmod" ] || tar -czvf "out/ftpd-$(GIT_COMMIT).hmod" -C mod/ etc
+	tar -czvf "$@" -C mod/ etc
 
 clean: clean-hmod
 
